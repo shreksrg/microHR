@@ -160,6 +160,8 @@ class Api extends FrontController
 
     public function do_auth()
     {
+        echo 'hello,microHR';
+        return false;
         //CSession::drop('_open_id');
         if (!($openId = CSession::get('_open_id'))) {
             $config = CLoader::config('api/app');
@@ -185,9 +187,9 @@ class Api extends FrontController
         var_dump($response);
     }
 
-    public function drop()
+    public function test()
     {
-        CSession::drop('_open_id');
+        echo APP_URL . '/' . $this->uri->uri_string();
     }
 
 

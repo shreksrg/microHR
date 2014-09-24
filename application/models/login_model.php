@@ -1,7 +1,7 @@
 <?php
 
 
-class Login_model extends CI_Model
+class Login_model extends App_model
 {
     private $_uid;
     protected $_user;
@@ -17,19 +17,12 @@ class Login_model extends CI_Model
      * @param USER $user 用户对象
      * @return boolean
      */
-    public function authLogin($user)
+    public function authLogin($user, $reUrl = null)
     {
         //申请授权码
-        $authCode = $this->applyAuth();
-        if ($authCode) {
-            $access = $this->getAccess($authCode);
-            if ($access) {
-                $user->id = $access['openID'];
-                $user->row = $access;
-                return true;
-            }
-        }
-        return false;
+        $modelApi = CModel::make('api_model');
+        $action = $modelApi->authUrl($reUrl);
+        CView::show('code', array('action' => $action));
     }
 
     /**

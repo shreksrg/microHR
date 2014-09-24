@@ -22,17 +22,6 @@ class Register extends FrontController
     /**
      * 用户身份验证
      */
-    public function _authentication()
-    {
-        if ($this->_user->isGuest) {
-            $modelLogin = CModel::make('login_model');
-            $return = $modelLogin->authLogin($this->_user); //申请授权并登录
-            if ($return !== true) {
-                CAjax::result($return);
-                exit(0);
-            }
-        }
-    }
 
     public function index()
     {

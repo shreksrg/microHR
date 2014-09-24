@@ -13,7 +13,7 @@ class Stories extends FrontController
 
     public function _authentication()
     {
-
+        
         return true;
     }
 

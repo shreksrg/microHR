@@ -1,55 +1,15 @@
 <?php
 
 
-class Login extends MicroController
+class Login extends FrontController
 {
     public function index()
     {
-        $request = $this->input->server('REQUEST_METHOD');
-        $reUrl = $this->input->get('reUrl');
-        $request === 'GET' ? CView::show('login/index', array('reUrl' => $reUrl)) : $this->userLogin();
-    }
-
-
-    /**
-     * 用户授权登录
-     */
-    public function authLogin()
-    {
-        return true;
-    }
-
-
-
-    /**
-     * 用户登录
-     */
-    public function userLogin()
-    {
-        $username = $this->input->post('username', true);
-        $password = $this->input->post('password', true);
-
-        $this->_user->username = trim($username);
-        $this->_user->password = $password;
-
-        $this->load->model('login_model', '', true);
-        $modLogin = $this->login_model;
-        $boolean = $modLogin->authenticate($this->_user);
-
-        $responseArg = array('code' => 10000, 'message' => '登录失败，请检查用户名或密码', 'data' => null);
-        if ($boolean === true && $modLogin->save()) {
-            $responseArg['code'] = 0;
-            $responseArg['message'] = 'successful';
-        }
-        echo json_encode($responseArg);
-    }
-
-    /**
-     * 用户注册
-     */
-    public function register()
-    {
-
+        $reUrl = $this->input->get('redirect');
+        $modelApi = CModel::make('api_model');
+        $reUrl = APP_URL . '/login/auth?toUrl=' . $reUrl;
+        $reqUrl = $modelApi->authUrl($reUrl);
+        CView::show('auth', array('reqUrl' => $reqUrl));
     }
 
     /**

@@ -7,37 +7,37 @@ class FrontController extends CController
     /**
      * @var session键前缀
      */
-    protected $_session_prefix_key = '';
 
     public function __construct()
     {
         parent::__construct();
         $this->_user = new User();
         $this->_init();
-        $this->_session_prefix_key = base64_encode('_microHR_session');
     }
 
     public function _authentication()
     {
         if ($this->_user->isGuest) {
-            $modelLogin = CModel::make('Login_model');
-            $return = $modelLogin->authLogin($this->_user); //申请授权并登录
-            if ($return !== true) {
-                CAjax::result($return);
-                exit(0);
+            $authCode = $this->input->get('code');
+            $modelApi = CModel::make('api_model');
+            if ($authCode) {
+                $access = $modelApi->authAccess($authCode);
+                $access = json_decode($access, true);
+                if (isset($access['openid'])) {
+                    $this->user->id = $access['openid'];
+                    return true;
+                } else {
+                    $errCode = isset($access['errcode']) ? $access['errcode'] : 1000;
+                    CView::show('message/error', array('code' => $errCode, 'content' => '授权登录失败'));
+                }
+            } else {
+                $modelApi = CModel::make('api_model');
+                $reUrl = APP_URL . '/' . $this->uri->uri_string();
+                $reqUrl = $modelApi->authUrl($reUrl);
+                CView::show('auth', array('reqUrl' => $reqUrl));
+                exit;
             }
         }
     }
 
-    public function setSession($key, $data)
-    {
-        $key = $this->_session_prefix_key . $key;
-        $_SESSION[$key] = $data;
-    }
-
-    public function getSession($key = null)
-    {
-        $key = $this->_session_prefix_key . $key;
-        return isset($_SESSION[$key]) ? ($session = & $_SESSION[$key]) : null;
-    }
 }
