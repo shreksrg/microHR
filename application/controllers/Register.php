@@ -20,56 +20,47 @@ class Register extends FrontController
     }
 
     /**
-     * 用户身份验证
+     * 授权验证
      */
-
-    public function index()
+    public function _authentication()
     {
-        if (REQUEST_METHOD == 'POST') {
-            $return = false;
-            $post = $this->input->post();
-            $this->checkSubmit($post);
-
-            CSession::set('_register_post', $post);
-            $modelApi = CModel::make('api_model');
-            if (!($token = CSession::get('_auth_refresh_token'))) {
-                $this->authSubmit($modelApi);
-            } else {
-                $err = array('code' => 1001, 'content' => '授权验证错误');
-                $access = $modelApi->authRefresh($token);
-                if (isset($access['access_token'])) {
-                    $post['wxid'] = $access['openid'];
-                    $return = $this->_modelRegister->save($post);
-                    if ($return === true) {
-                        CView::show('Register/result');
-                    } else {
-                        $err = array('code' => 1002, 'content' => '注册失败:');
-                    }
-                } elseif (isset($access['errcode'])) {
-                    $this->authSubmit($modelApi);
-                    return false;
-                }
-                CView::show('message/error', $err);
+        if ($this->_user->isGuest) {
+            $action = $this->input->get('action');
+            if (REQUEST_METHOD == 'POST' && $action == 'append') {
+                $post = $this->input->post();
+                CSession::set('_register_post', $post);
             }
-
-        } else {
-            $_token = UUID::fast_uuid(6);
-            CSession::set('_register_token', $_token);
-            CView::show('register', array('token' => $_token));
+            parent::_authentication();
         }
     }
 
-    /**
-     * 授权提交注册
-     */
-    public function authSubmit($modelApi = null)
+    public function index()
     {
-        $post = CSession::get('_register_post');
-        if ($post) {
-            $reUrl = urlencode(APP_URL . '/register/save');
-            $action = $modelApi->authUrl($reUrl);
-            CView::show('code', array('action' => $action));
-        } else CView::show('message/error', array('code' => 1000, 'content' => '注册请求过期'));
+        $action = $this->input->get('action');
+        if ($action == 'append') {
+            $this->append();
+        } else {
+            $_token = UUID::fast_uuid(6);
+            CSession::set('_register_token', $_token);
+            CView::show('register/form', array('token' => $_token));
+        }
+    }
+
+    protected function append()
+    {
+        $post = $this->input->post();
+        if (!$post) $post = CSession::get('_register_post');
+        $this->checkSubmit($post);
+        $modelApi = CModel::make('api_model');
+        $post['wxid'] = $this->_user->id;
+        $return = $this->_modelRegister->save($post);
+        if ($return === true) {
+            CSession::drop('_register_token');
+            CView::show('register/result');
+        } else {
+            $err = array('code' => 1002, 'content' => '注册失败');
+            CView::show('message/error', $err);
+        }
     }
 
     /**
@@ -79,48 +70,17 @@ class Register extends FrontController
     {
         $err = array();
         if ($this->validateForm($data) !== true) {
-            $err = array('code' => '1001', 'content' => '注册数据异常');
+            $err = array('code' => '1001', 'content' => '提交数据异常');
         } else {
             $token = CSession::get('_register_token');
             if (!$token || $data['token'] != $token) {
-                $err = array('code' => '1001', 'content' => '表单填写不正确');
+                $err = array('code' => '1001', 'content' => '请求已过期');
             }
         }
         if ($err) {
             CView::show('message/error', $err);
             exit(0);
         }
-    }
-
-    /**
-     * 保存注册
-     */
-    public function save()
-    {
-        $errCode = 1001;
-        $content = '授权失效';
-        $post = CSession::get('_register_post');
-        $this->checkSubmit($post);
-
-        $authCode = $this->input->get('code');
-        if ($authCode) {
-            $modelApi = CModel::make('api_model');
-            $access = $modelApi->authAccess($authCode);
-            if (isset($access['access_token'])) {
-                CSession::set('_auth_refresh_token', $access['refresh_token']);
-                $post['wxid'] = $access['openid'];
-                $return = $this->_modelRegister->save($post);
-                CSession::set('_register_token', null);
-                if ($return === true) {
-                    CView::show('register/result');
-                    return true;
-                } else {
-                    $errCode = 1000;
-                    $content = '注册失败';
-                }
-            }
-        }
-        CView::show('message/error', array('code' => $errCode, 'content' => $content));
     }
 
     /**
@@ -140,74 +100,4 @@ class Register extends FrontController
     }
 
 
-    protected function doRegister($data)
-    {
-        $return = $this->_modelRegister->save($data);
-        return $return;
-    }
-
-
-    /**
-     * 注册性别
-     */
-    protected function regGender()
-    {
-        if (REQUEST_METHOD == 'POST') {
-            $gender = (int)$this->input->post('gender');
-            $this->setSession('gender', $gender);
-            CAjax::show(0, 'successful');
-        } else {
-            CView::show('register/reg_gender');
-        }
-    }
-
-    /**
-     * 注册手机
-     */
-    protected function regMobile()
-    {
-        if (REQUEST_METHOD == 'POST') {
-            $mobile = (int)$this->input->post('mobile');
-            $this->setSession('mobile', $mobile);
-            CAjax::show(0, 'successful');
-        } else {
-            CView::show('register/reg_mobile');
-        }
-    }
-
-    /**
-     * 注册院校专业
-     */
-    protected function regMajor()
-    {
-        if (REQUEST_METHOD == 'POST') {
-            $academy = $this->input->post('academy', true);
-            $major = $this->input->post('major', true);
-            $this->setSession('academy', $academy);
-            $this->setSession('major', $major);
-            //保存注册
-            $return = $this->regSave();
-            CAjax::result($return);
-        } else {
-            CView::show('register/reg_gender');
-        }
-    }
-
-    /**
-     * 保存注册
-     */
-    protected function regSave()
-    {
-        $data = array();
-        //检查登记步骤
-        foreach ($this->_regItem as $item) {
-            if (!isset($regArr[$item]) || strlen($regArr[$item]) <= 0) {
-                return false;
-            }
-            $data[$item] = $this->getSession($item);
-        }
-        //写入注册数据
-        $return = $this->_modelRegister->save($data);
-        return $return;
-    }
 }
