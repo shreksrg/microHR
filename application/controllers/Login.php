@@ -16,6 +16,7 @@ class Login extends FrontController
 
     public function _authentication()
     {
+
         return true;
     }
 
@@ -33,8 +34,6 @@ class Login extends FrontController
         }
         CView::show('auth', array('result' => 'fail'));
     }
-
-
 
 
 }

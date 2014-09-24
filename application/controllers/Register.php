@@ -17,6 +17,7 @@ class Register extends FrontController
     {
         parent::__construct();
         $this->_modelRegister = CModel::make('register_model');
+
     }
 
     /**
@@ -24,13 +25,11 @@ class Register extends FrontController
      */
     public function _authentication()
     {
+        $filter = array('index');
+        if (in_array(APP_METHOD, $filter)) return false;
         if ($this->_user->isGuest) {
-            $action = $this->input->get('action');
-            if (REQUEST_METHOD == 'POST' && $action == 'append') {
-                $post = $this->input->post();
-                CSession::set('_register_post', $post);
-            }
-            parent::_authentication();
+            CAjax::fail();
+            exit;
         }
     }
 
@@ -66,7 +65,7 @@ class Register extends FrontController
     /**
      * 检查注册提交表单
      */
-    public function checkSubmit($data)
+    protected  function checkSubmit($data)
     {
         $err = array();
         if ($this->validateForm($data) !== true) {

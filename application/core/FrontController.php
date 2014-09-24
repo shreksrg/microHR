@@ -4,9 +4,7 @@ define('APP_URL', SITE_URL);
 
 class FrontController extends CController
 {
-    /**
-     * @var session键前缀
-     */
+
 
     public function __construct()
     {
