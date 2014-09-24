@@ -16,7 +16,6 @@ class Login extends FrontController
 
     public function _authentication()
     {
-
         return true;
     }
 
