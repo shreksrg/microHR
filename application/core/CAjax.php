@@ -22,7 +22,7 @@ class CAjax extends CCApplication
         self::show($code, $message);
     }
 
-    
+
     static public function result($boolean)
     {
         $boolean === true ? CAjax::success() : CAjax::fail();

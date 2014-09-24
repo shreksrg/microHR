@@ -23,6 +23,7 @@
             <ul>
                 <li><a class="btnNav" href="<?= SITE_URL ?>/admin/registerman">登记管理</a></li>
                 <li><a class="btnNav" href="<?= SITE_URL ?>/admin/storyman">故事管理</a></li>
+                <li><a class="btnNav" href="<?= SITE_URL ?>/admin/apiman/menu">微信菜单</a></li>
                 <li><a class="btnNav" href="<?= SITE_URL ?>/admin/sysman?r=admin">系统用户</a></li>
             </ul>
         </li>

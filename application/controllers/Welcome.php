@@ -3,8 +3,16 @@
 
 class Welcome extends FrontController
 {
+
+    public function _authentication()
+    {
+        return false;
+    }
+
     public function index()
     {
-        echo 'Welcome,MicroHR';
+        $this->input->get();
+        $this->load->model('login_model');
+        CView::show('index');
     }
 }

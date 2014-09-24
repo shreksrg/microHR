@@ -20,7 +20,7 @@ class FrontController extends CController
     public function _authentication()
     {
         if ($this->_user->isGuest) {
-            $modelLogin = CModel::make('login_model');
+            $modelLogin = CModel::make('Login_model');
             $return = $modelLogin->authLogin($this->_user); //申请授权并登录
             if ($return !== true) {
                 CAjax::result($return);

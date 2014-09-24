@@ -33,6 +33,8 @@ define('SITE_URL', 'http://' . SERVER_NAME);
 
 require(ROOT . '/system/libraries/kint/Kint.class.php');
 
+
+
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
@@ -223,6 +225,7 @@ if (is_dir($application_folder)) {
     }
 
     define('APPPATH', $application_folder . DIRECTORY_SEPARATOR);
+
 } else {
     if (!is_dir(BASEPATH . $application_folder . DIRECTORY_SEPARATOR)) {
         header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
@@ -232,7 +235,6 @@ if (is_dir($application_folder)) {
 
     define('APPPATH', BASEPATH . $application_folder . DIRECTORY_SEPARATOR);
 }
-
 
 // The path to the "views" folder
 if (!is_dir($view_folder)) {

@@ -10,7 +10,6 @@ class CController extends CI_Controller
         parent::__construct();
         defined('REQUEST_METHOD') or define('REQUEST_METHOD', $this->input->server('REQUEST_METHOD'));
         micro::openSession();
-
     }
 
     protected function _init()

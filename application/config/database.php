@@ -93,6 +93,7 @@ $db['default'] = array(
     'hostname' => 'localhost',
     'username' => 'root',
     'password' => '',
+    //'password' => 'microhr.123456',
     'database' => 'microhr',
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
@@ -129,9 +130,6 @@ $db['default'] = array(
     'autoinit' => TRUE,
     'stricton' => FALSE,
 );*/
-
-
-
 
 
 /* End of file database.php */

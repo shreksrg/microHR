@@ -2,11 +2,11 @@
 
 class Register extends FrontController
 {
-
     /**
      * @var 登记模型
      */
     protected $_modelRegister;
+    protected $_modelApi;
 
     /**
      * @var 登记项目
@@ -17,7 +17,6 @@ class Register extends FrontController
     {
         parent::__construct();
         $this->_modelRegister = CModel::make('register_model');
-        $this->_session_prefix_key = base64_encode('_microHR_register');
     }
 
     /**
@@ -37,12 +36,127 @@ class Register extends FrontController
 
     public function index()
     {
-        $route = $this->input->get('r');
-        $method = 'reg' . ucfirst($route);
-        if (method_exists($this, $method)) {
-            call_user_func_array(array($this, $method), array());
+        if (REQUEST_METHOD == 'POST') {
+            $return = false;
+            $post = $this->input->post();
+            $this->checkSubmit($post);
+
+            CSession::set('_register_post', $post);
+            $modelApi = CModel::make('api_model');
+            if (!($token = CSession::get('_auth_refresh_token'))) {
+                $this->authSubmit($modelApi);
+            } else {
+                $err = array('code' => 1001, 'content' => '授权验证错误');
+                $access = $modelApi->authRefresh($token);
+                if (isset($access['access_token'])) {
+                    $post['wxid'] = $access['openid'];
+                    $return = $this->_modelRegister->save($post);
+                    if ($return === true) {
+                        CView::show('Register/result');
+                    } else {
+                        $err = array('code' => 1002, 'content' => '注册失败:');
+                    }
+                } elseif (isset($access['errcode'])) {
+                    $this->authSubmit($modelApi);
+                    return false;
+                }
+                CView::show('message/error', $err);
+            }
+
+        } else {
+            $_token = UUID::fast_uuid(6);
+            CSession::set('_register_token', $_token);
+            CView::show('register', array('token' => $_token));
         }
     }
+
+    /**
+     * 授权提交注册
+     */
+    public function authSubmit($modelApi = null)
+    {
+        $post = CSession::get('_register_post');
+        if ($post) {
+            $reUrl = urlencode(APP_URL . '/register/save');
+            $action = $modelApi->authUrl($reUrl);
+            CView::show('code', array('action' => $action));
+        } else CView::show('message/error', array('code' => 1000, 'content' => '注册请求过期'));
+    }
+
+    /**
+     * 检查注册提交表单
+     */
+    public function checkSubmit($data)
+    {
+        $err = array();
+        if ($this->validateForm($data) !== true) {
+            $err = array('code' => '1001', 'content' => '注册数据异常');
+        } else {
+            $token = CSession::get('_register_token');
+            if (!$token || $data['token'] != $token) {
+                $err = array('code' => '1001', 'content' => '表单填写不正确');
+            }
+        }
+        if ($err) {
+            CView::show('message/error', $err);
+            exit(0);
+        }
+    }
+
+    /**
+     * 保存注册
+     */
+    public function save()
+    {
+        $errCode = 1001;
+        $content = '授权失效';
+        $post = CSession::get('_register_post');
+        $this->checkSubmit($post);
+
+        $authCode = $this->input->get('code');
+        if ($authCode) {
+            $modelApi = CModel::make('api_model');
+            $access = $modelApi->authAccess($authCode);
+            if (isset($access['access_token'])) {
+                CSession::set('_auth_refresh_token', $access['refresh_token']);
+                $post['wxid'] = $access['openid'];
+                $return = $this->_modelRegister->save($post);
+                CSession::set('_register_token', null);
+                if ($return === true) {
+                    CView::show('register/result');
+                    return true;
+                } else {
+                    $errCode = 1000;
+                    $content = '注册失败';
+                }
+            }
+        }
+        CView::show('message/error', array('code' => $errCode, 'content' => $content));
+    }
+
+    /**
+     * 验证表单
+     */
+    protected function  validateForm()
+    {
+        $validator = FormValidation::make();
+        $validator->set_rules('nickname', 'Nickname', 'required|xss_clean');
+        $validator->set_rules('gender', 'Gender', 'required|integer|xss_clean');
+        $validator->set_rules('mobile', 'Mobile', 'required|integer|max_length[13]|numeric|xss_clean');
+        $validator->set_rules('academy', 'Academy', 'required|xss_clean');
+        $validator->set_rules('major', 'Major', 'required|xss_clean');
+        $validator->set_rules('edu', 'Edu', 'required|integer|xss_clean');
+        $validator->set_rules('token', 'Token', 'required|xss_clean');
+        return $validator->run() === true;
+    }
+
+
+    protected function doRegister($data)
+    {
+        $return = $this->_modelRegister->save($data);
+        return $return;
+    }
+
 
     /**
      * 注册性别

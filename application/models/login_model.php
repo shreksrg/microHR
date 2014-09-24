@@ -37,6 +37,7 @@ class Login_model extends CI_Model
      */
     public function applyAuth()
     {
+        $code = null;
         return $code = 'CODE=ABC123456';
     }
 
@@ -48,8 +49,19 @@ class Login_model extends CI_Model
      */
     public function getAccess($code)
     {
+        $access = array();
         return $access = array('openID' => 'openID=ABCD123456');
     }
 
-
+    public function getOpenID()
+    {
+        //申请授权码
+        $openID = false;
+        $authCode = $this->applyAuth();
+        if ($authCode) {
+            $access = $this->getAccess($authCode);
+            if ($access) $openID = $access['openID'];
+        }
+        return $openID;
+    }
 }

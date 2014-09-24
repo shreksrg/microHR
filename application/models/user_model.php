@@ -17,4 +17,11 @@ class User_model extends CI_Model
     {
         return md5($password);
     }
+
+    public function getUserByWId($id)
+    {
+        $sql = "SELECT id FROM mhr_register WHERE isdel=0 and id=$id";
+        $query = $this->db->query($sql);
+        return $query->row();
+    }
 }

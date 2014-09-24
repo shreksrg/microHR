@@ -1,0 +1,175 @@
+/*------------------------------------------------------------------------
+ * Copyright (c) 2014 hailiang All rights reserved. by Jackal
+------------------------------------------------------------------------*/
+
+@media only screen and (min-width: 481px) {
+*{display:none}
+}
+
+/* 移动设备 */
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+/* comon */
+*{margin:0;padding:0}
+li{list-style:none}
+a{color:#fff}
+html  {height:100%;}
+body{font-size:14px;font-family:"Microsoft Yahei","Arial";color:#fff;background:#4cbad5;}
+a{ text-decoration:none}
+.page{width:100%;height:100%;overflow:hidden}
+/*.page1,.page2{transition:all .3s linear;}
+.page1{position:absolute;width:100%;height:100%;left:0;top:0;}
+.page2{position:absolute;width:100%;height:100%;left:100%;top:0;background:#000}
+.page3{position:absolute;width:100%;height:100%;left:200%;top:0;background:#09F}*/
+
+.nextarrow{position:absolute;width:50px;height:50px;border-radius:50px;background:#fed700 url(../img/nextarrow.png) no-repeat;background-size:100% 100%;right:10px;top:270px;box-shadow:0px 0px 3px rgba(0,0,0, .2);visibility:hidden;}
+
+
+/* index */
+.index_wrapper{width:90%;overflow:hidden;margin:0 auto;}
+.index_wrapper ul{width:100%;}
+.index_wrapper ul li{width:50%;height:124px;float:left;margin:0;text-align:center;font-size:18px;border-bottom:1px dashed rgba(255, 255, 255, 0.2);}
+.index_wrapper ul li:nth-child(odd){border-right:1px dashed rgba(255, 255, 255, 0.2);margin-right:-1px;}
+.index_wrapper ul li:nth-child(1){background:url(../img/index_icon1.png) no-repeat center 20px;background-size:55px 55px}
+.index_wrapper ul li:nth-child(2){background:url(../img/index_icon2.png) no-repeat center 20px;background-size:55px 55px}
+.index_wrapper ul li:nth-child(3){background:url(../img/index_icon3.png) no-repeat center 20px;background-size:55px 55px}
+.index_wrapper ul li:nth-child(4){background:url(../img/index_icon4.png) no-repeat center 20px;background-size:55px 55px}
+.index_wrapper ul li:nth-child(5){background:url(../img/index_icon5.png) no-repeat center 20px;background-size:55px 55px}
+.index_wrapper ul li:nth-child(6){background:url(../img/index_icon6.png) no-repeat center 20px;background-size:55px 55px}
+.index_wrapper ul li:nth-child(7){background:url(../img/index_icon7.png) no-repeat center 20px;background-size:55px 55px;border-bottom:0}
+.index_wrapper ul li a{display:block;width:100%;height:50px;padding-top:90px;}
+
+
+/* recruitment */
+/*_________page1 */
+.recruitment_wrapper{position:relative;width:300px;margin:10% auto 0;height:500px;}
+.recruitment_wrapper .man{position:absolute;width:220px;height:205px;left:5px;top:18px;background:url(../img/recruitment_man.png) no-repeat;background-size:660px 205px;background-position:220px 0;}
+.recruitment_wrapper .blackboard{position:absolute;width:186px;height:132px;left:120px;top:-200px;background:url(../img/recruitment_blackboard.png) no-repeat;background-size:100% 100%}
+.recruitment_wrapper .boardleg{position:absolute;width:186px;height:79px;left:120px;top:147px;background:url(../img/recruitment_boardleg.png) no-repeat;background-size:100% 100%;visibility:hidden}
+.recruitment_wrapper .blackboard.down{-webkit-animation: Move_t2d .3s ease-in .5s 1 forwards;}
+@-webkit-keyframes Move_t2d {
+	0% {top:-200px}
+	100%{top:15px}
+}
+.recruitment_wrapper .man.out{-webkit-animation:Move_outgif .3s steps(3, start) .2s 1 forwards;}
+@-webkit-keyframes Move_outgif {
+	0% {background-position:220px 0}
+	100%{background-position:-440px 0}
+}
+.recruitment_wrapper .text_title1,.recruitment_wrapper .text_title2{position:absolute;width:300px;height:24px;left:15px;top:250px;color:#fed700;font-size:24px;font-weight:bold;visibility:hidden;}
+.recruitment_wrapper .text_title2{top:350px}
+.recruitment_wrapper .text_cont1,.recruitment_wrapper .text_cont2{position:absolute;width:300px;height:35px;left:15px;background:url(../img/recruitment_text1.png) no-repeat;background-size:246px 35px;left:15px;top:290px;visibility:hidden;}
+.recruitment_wrapper .text_cont2{background:url(../img/recruitment_text2.png) no-repeat;background-size:246px 35px;left:15px;top:390px;}
+/*_________page2 */
+.recruitment_wrapper .biground{position:absolute;width:320px;height:320px;right:-20%;top:5%;background:url(../img/recruitment_roundboard.png) no-repeat;background-size:100% 100%;-webkit-transform-origin:0% 50%;visibility:hidden}
+.recruitment_wrapper .man2{position:absolute;width:122px;height:205px;left:15px;top:150px;background:url(../img/recruitment_man2.png) no-repeat;background-size:100% 100%;visibility:hidden}
+.recruitment_wrapper .light{position:absolute;width:207px;height:239px;left:-30px;top:-20px;background:url(../img/recruitment_light.png) no-repeat;background-size:100% 100%;visibility:hidden}
+.nextarrow2{position:absolute;width:50px;height:50px;border-radius:50px;background:#fed700 url(../img/nextarrow.png) no-repeat;background-size:100% 100%;left:100px;top:290px;box-shadow:0px 0px 3px rgba(0,0,0, .2);visibility:hidden;}
+/*_________page3 */
+.recruitment_wrapper .man3{position:absolute;width:266px;height:367px;left:50%;top:0;margin:0 0 0 -133px;background:url(../img/recruitment_man3.png) no-repeat;background-size:100% 100%;visibility:hidden}
+.nextarrow3{position:absolute;display:block;width:50px;height:50px;border-radius:50px;left:50%;top:50%;margin:34px 0 0 66px;background:#fed700;box-shadow:0px 0px 3px rgba(0,0,0, .2);line-height:50px;text-align:center;font-size:16px;visibility:hidden;}
+.nextarrow3 a{color:#870701;}
+
+
+/* register */
+/*_________step1 */
+.register_man{width:300px;height:40px;background:url(../img/register_step1_man.png) no-repeat;background-size:100% 100%;padding-top:156px}
+.register_hat{width:300px;height:40px;background:url(../img/register_step3_hat.png) no-repeat;background-size:100% 100%;padding-top:156px}
+.register_special{width:300px;height:40px;background:url(../img/register_step4_special.png) no-repeat;background-size:100% 100%;padding-top:156px}
+.register_phone{width:300px;height:40px;background:url(../img/register_step5_phone.png) no-repeat;background-size:100% 100%;padding-top:156px}
+.register_man input[type=text],.register_hat input[type=text],.register_special input[type=text],.register_phone input[type=text]{width:78%;height:38px;background:#fff;font-size:14px;line-height:38px;border:1px #2e8ba2 solid;border-radius:5px;text-align:center}
+.register_question_title{width:100%;height:45px;background:url(../img/register_titlebg.png) repeat-y;background-size:100% 100%;color:#11518b;line-height:45px;text-align:center;font-size:20px}
+/*_________step1 */
+.register_man2{position:absolute;display:block;width:108px;height:192px;background:url(../img/register_step2_man.png) no-repeat;background-size:100% 100%;right:50%; bottom:20px;-webkit-transform-origin:right 80%;-webkit-transform:scale(0.8);opacity:0.5;transition:all .3s linear;}
+.register_women{position:absolute;display:block;width:108px;height:192px;background:url(../img/register_step2_women.png) no-repeat;background-size:100% 100%;left:50%;bottom:20px;-webkit-transform-origin:left 80%;-webkit-transform:scale(0.8);opacity:0.5;transition:all .3s linear;}
+.register_man2.active,.register_women.active{-webkit-transform:scale(1);opacity:1}
+.register_man2 .sex,.register_women .sex{display:block;width:34px;height:16px;color:#4cbad5;background:#fff;text-align:center;line-height:16px;padding:3px 5px;border-radius:3px;margin:130px 0 0 -20px}
+.register_women .sex{margin:130px 0 0 80px}
+.register_man2 .sex.cur,.register_women .sex.cur{background:#fff83b}
+#male,#female,#sc,#md,#ms{display:none}
+.register_submit{background:#fff83b;color:#4cbad5;width:100px;height:38px;margin:20px auto 0;border:0;border-radius:5px;font-size:16px}
+.register_education{width:234px;height:35px;margin:20px auto 0;}
+.register_education label{display:inline-block;float:left;width:60px;height:25px;background:#fff;color:#4cbad5;text-align:center;line-height:25px;padding:3px 5px;border-radius:3px;margin-left:12px}
+.register_education label.active{background:#fff83b;}
+
+
+/* hiring_process */
+.hiring_process_earth{position:absolute;left:50%;margin:0 0 0 -205px;bottom:-250px;width:410px;height:410px;background:url(../img/hiring_process_earth.png) no-repeat;background-size:100% 100%;-webkit-transform-origin:50% 50%;}
+
+
+/* schedule */
+.schedule_wrapper{position:relative;width:300px;margin:10% auto 0;height:500px;}
+.schedule_wrapper .schedule{position:absolute;left:0;top:0;width:300px;height:654px;background:url(../img/schedule.png) no-repeat 0 40px;background-size:300px 620px;font-size:24px; text-align:center;}
+.schedulebg{position:absolute;width:180px;height:180px;right:0;top:5%;background:#4cbad5 url(../img/schedulebg.png) no-repeat;background-size:180px 180px;}
+
+
+/* resume */
+.resume_wrapper{position:relative;width:300px;margin:10% auto 0;overflow:hidden;}
+.resume_wrapper .resume{width:300px;height:30px;margin:50px auto 0;font-size:20px; text-align:center;}
+.resumebg{position:absolute;width:180px;height:180px;left:0;top:5%;background:#4cbad5 url(../img/resumebg.png) no-repeat;background-size:180px 180px;}
+.resume_wrapper a.btn51job{display:block;width:215px;height:95px;margin:100px auto 0;background:url(../img/resume_51job.png) no-repeat;background-size:215px 95px;}
+.resume_wrapper a.btnzl{display:block;width:215px;height:95px;margin:0 auto;background:url(../img/resume_zl.png) no-repeat;background-size:215px 95px;}
+}
+
+
+
+
+/* comon 动画 */
+.show{display:block}
+.fadein{-webkit-animation: Trs_fadein .3s ease-out 0.1s 1 forwards;}
+@-webkit-keyframes Trs_fadein {
+	0% {visibility:visible;opacity:0}
+	100%{visibility:visible;opacity:1}
+}
+.zoomin{-webkit-animation: Trs_zoomin_Scale .8s ease-in 0.1s 1 forwards;}
+@-webkit-keyframes Trs_zoomin_Scale {
+	0% {visibility:visible;opacity:0;-webkit-transform:scale(4);-webkit-filter: blur(2px);}
+	100% {visibility:visible;opacity:1;-webkit-transform:scale(1);}
+}
+.slashout{-webkit-animation: Trs_slashout .8s ease-in 0.1s 1 forwards;}
+@-webkit-keyframes Trs_slashout {
+	0% {left:10px;top:10}
+	100% {left:0;top:0}
+}
+.roundin{-webkit-animation:Trs_roundin .8s ease-in 0.1s 1 forwards;}
+@-webkit-keyframes Trs_roundin {
+	0% {visibility:visible;opacity:0;-webkit-transform:translateY(-200px) scale(0) rotate(60deg)}
+	100% {visibility:visible;opacity:1;-webkit-transform:translateY(0px) scale(1) rotate(0deg)}
+}
+.shineN{-webkit-animation:Trs_shineN .5s steps(4, start)  0.1s 1 forwards;}
+@-webkit-keyframes Trs_shineN {
+	0% {visibility:visible;opacity:0;}
+	33% {visibility:visible;opacity:1;}
+	66% {visibility:visible;opacity:0;}
+	100% {visibility:visible;opacity:1;}
+}
+.rotation{-webkit-animation:Trs_rotation 20s linear 0s infinite;}
+@-webkit-keyframes Trs_rotation {
+	0% {-webkit-transform:rotate(0deg)}
+	100% {-webkit-transform:rotate(-360deg)}
+}
+
+
+/* 兼容iphone4/4s */
+@media (device-height:480px) and (-webkit-min-device-pixel-ratio:2){
+.recruitment_wrapper{margin:3% auto 0;height:400px}
+.recruitment_wrapper .text_title1,.recruitment_wrapper .text_title2{top:250px}
+.recruitment_wrapper .text_title2{top:320px}
+.recruitment_wrapper .text_cont1,.recruitment_wrapper .text_cont2{position:absolute;width:100%;height:35px;left:15px;background:url(../img/recruitment_text1.png) no-repeat;background-size:211px 30px;left:15px;top:280px;}
+.recruitment_wrapper .text_cont2{background:url(../img/recruitment_text2.png) no-repeat;background-size:211px 30px;left:15px;top:350px;}
+}
+
+/* 兼容iphone5 */
+@media (device-height:568px) and (-webkit-min-device-pixel-ratio:2){
+}
+
+/* 平板之类的宽度 1024 或PC设备 */
+@media only screen and (min-width: 481px){
+}
+
+/* 竖屏 */
+@media screen and (orientation:portrait) and (max-width: 720px){
+}
+
+/* 横屏 */
+@media screen and (orientation:landscape){
+}
