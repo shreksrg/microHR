@@ -173,6 +173,9 @@
         <li>5</li>
     </ul>
 </div>
+
+<iframe id="frmAuth" src="" frameborder="0" width="0" height="0" scrolling="no" style="display: none"></iframe>
+
 <script>
     $("#scroller li .register_sex label").click(function () {
         $("#scroller li .register_sex label").removeClass("active");
@@ -191,23 +194,37 @@
     frmReg.submit(function () {
         var chk = checkSubmitAll();
         if (chk) {
-            $.ajax({
-                url: frmReg.attr('action'),
-                type: frmReg.attr('method'),
-                data: frmReg.serializeArray(),
-                dataType: "json",
-                success: function (rep) {
-                    if (rep.code == 0) {
-                        alert('注册成功');
-                        location.href = $('[name=reUrl]').val();
-                    } else {
-                        alert(rep.message);
-                    }
+            $.get('<?=APP_URL?>/login', null, function (r) {
+                if (r.code == 0) {
+                    submit();
+                } else {
+                    $('#frmAuth').attr('src', r.data);
                 }
             })
         }
         return false;
     })
+
+    function error() {
+        alert('验证授权失败');
+    }
+
+    function submit() {
+        $.ajax({
+            url: frmReg.attr('action'),
+            type: frmReg.attr('method'),
+            data: frmReg.serializeArray(),
+            dataType: "json",
+            success: function (rep) {
+                if (rep.code == 0) {
+                    alert('注册成功');
+                    location.href = $('[name=reUrl]').val();
+                } else {
+                    alert(rep.message);
+                }
+            }
+        })
+    }
 </script>
 </body>
 </html>

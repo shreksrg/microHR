@@ -97,7 +97,6 @@ class Stories extends FrontController
         CAjax::result($return);
     }
 
-
     /**
      * 验证表单
      */
