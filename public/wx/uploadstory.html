@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,minimal-ui">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+
+<link rel="shortcut icon" href="img/favicon.ico">
+<meta http-equiv="expires" content="-1">
+<title>海亮校园招聘</title>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<script src="js/jquery.min.js"></script>
+<script src="js/main.js"></script>
+</head>
+
+
+<body>
+<div class="uploadstory_wrapper">
+	<div class="uploadstory_title">你的故事</div>
+   	<div class="message">每个人是一个载体，更是一种能量，<span>请以下面卡片中的命题为主题，</span>写一篇故事，标题自拟，谈谈你的能力、经历、与众不同。</div>
+	<div id="card_Container" class="small">
+		<div id="cover">
+			<h2><span>你抽到的命题是</span><br />"我，是这么一个人"</h2>
+			<input type="text" value="故事标题"/>
+			<textarea>请根据以上命题写下你的故事，字数不超过600字</textarea>
+            <button class="submitstory">提交故事</button>
+        </div>
+        <div id="mask"></div>
+	</div>
+</div>
+
+<script>
+	$("#card_Container").click(function(){
+		$(".uploadstory_title").addClass("fadeout");
+		$(".message").addClass("fadeout");
+		$("#card_Container").removeClass("small");
+		$("#card_Container").toggleClass('flipped');
+		$(this).unbind("click");
+		setTimeout(function(){$("#card_Container #mask").css("display","none");},1000 );
+	});
+</script>
+
+</body>
+
+</html>

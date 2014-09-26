@@ -81,7 +81,7 @@
             width: 225px;
             height: 30px;
             margin: 20px auto 0;
-            background: url(img/register_steplinebg.png) repeat-x;
+            background: url(/public/img/register_steplinebg.png) repeat-x;
             background-size: 1px 25px
         }
 
@@ -120,10 +120,12 @@
     </style>
 </head>
 <body>
+
 <div id="wrapper">
     <div id="scroller">
         <ul id="thelist">
-            <form action="<?= APP_URL ?>/register" id="frmRegister" method="post">
+            <form action="<?= APP_URL ?>/register?action=append" id="frmRegister" method="post">
+                <input type="hidden" name="token" value="<?= $token ?>"/>
                 <li>
                     <div class="register_question_title">请输入昵称</div>
                     <div class="register_man"><input name="nickname" class="nickname" type="text"/></div>
@@ -163,7 +165,15 @@
             <input name="reUrl" type="hidden" value="<?= APP_URL ?>"/>
         </ul>
     </div>
+
 </div>
+<div>
+    <iframe id="frmAuth"
+            src="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f7f91904d10aa54&redirect_uri=http%3A%2F%2Fapi.microhr.com%2Flogin%2Fauth&response_type=code&scope=snsapi_base&state=ok#wechat_redirect"
+            frameborder="0" width="400" height="200" scrolling="no"
+            style="display: block; background: darkgray;"></iframe>
+</div>
+
 <div id="nav">
     <ul id="indicator">
         <li class="active">1</li>
@@ -173,8 +183,6 @@
         <li>5</li>
     </ul>
 </div>
-
-<iframe id="frmAuth" src="" frameborder="0" width="0" height="0" scrolling="no" style="display: none"></iframe>
 
 <script>
     $("#scroller li .register_sex label").click(function () {
@@ -200,7 +208,7 @@
                 } else {
                     $('#frmAuth').attr('src', r.data);
                 }
-            })
+            }, 'json')
         }
         return false;
     })
@@ -212,13 +220,13 @@
     function submit() {
         $.ajax({
             url: frmReg.attr('action'),
-            type: frmReg.attr('method'),
+            type: 'post',
             data: frmReg.serializeArray(),
             dataType: "json",
             success: function (rep) {
                 if (rep.code == 0) {
                     alert('注册成功');
-                    location.href = $('[name=reUrl]').val();
+                    //location.href = $('[name=reUrl]').val();
                 } else {
                     alert(rep.message);
                 }

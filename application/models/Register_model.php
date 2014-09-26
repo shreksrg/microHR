@@ -44,7 +44,7 @@ class Register_model extends App_model
     public function save($data)
     {
         $now = time();
-        $value = array(
+        $values = array(
             'wxid' => $data['wxid'],
             'nickname' => $data['nickname'],
             'gender' => $data['gender'],
@@ -56,7 +56,8 @@ class Register_model extends App_model
             'create_time' => $now,
             'update_time' => $now,
         );
-        return $this->db->insert('mhr_register', $value);
+
+        return $this->db->insert('mhr_register', $values);
     }
 
     public function getRow($args, $sort = null, $limit = null)

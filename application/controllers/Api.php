@@ -160,8 +160,6 @@ class Api extends FrontController
 
     public function do_auth()
     {
-        echo 'hello,microHR';
-        return false;
         //CSession::drop('_open_id');
         if (!($openId = CSession::get('_open_id'))) {
             $config = CLoader::config('api/app');

@@ -2,6 +2,12 @@
 
 class Login extends FrontController
 {
+
+    public function _authentication()
+    {
+        return true;
+    }
+
     public function index()
     {
         if ($this->_user->isGuest) {
@@ -14,11 +20,6 @@ class Login extends FrontController
         }
     }
 
-    public function _authentication()
-    {
-        return true;
-    }
-
     public function auth()
     {
         $code = $this->input->get('code');
@@ -27,7 +28,7 @@ class Login extends FrontController
             $access = $modelApi->authAccess($code);
             $access = json_decode($access, true);
             if (isset($access['openid'])) {
-                $this->user->id = $access['openid'];
+                $this->_user->id = $access['openid'];
                 CView::show('auth', array('result' => 'ok'));
             }
         }

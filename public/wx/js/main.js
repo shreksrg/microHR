@@ -67,6 +67,9 @@ $(function () {
     })
 
 
+    //
+
+
 //	$(".indexbg").click(function(){ 
 //		$(this).addClass("dismiss");
 //		//$(this).removeClass("show");
@@ -120,6 +123,9 @@ function checkSubmitAll() {
     }
 
     return true;
+
+    //location.href = "uploadstory.html";
+
 }
 
 //验证邮箱 

@@ -28,6 +28,7 @@ date_default_timezone_set('PRC');
 define('ROOT', dirname(__FILE__));
 define('SERVER_NAME', $_SERVER['SERVER_NAME']);
 define('SITE_URL', 'http://' . SERVER_NAME);
+
 //defined('SITE_URL') or define('SITE_URL', 'http://gq.hailiang.cn/index.php');
 
 

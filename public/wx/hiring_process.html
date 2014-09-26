@@ -1,10 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,minimal-ui">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 <link rel="shortcut icon" href="img/favicon.ico">
 <meta http-equiv="expires" content="-1">
@@ -13,15 +15,93 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/main.js"></script>
 <style>
-body{background:#bae4ef}
+body{background:#fff url(img/hiring_process_bg.png) repeat-x;background-size:1px 275px;height:100%}
 </style>
+
 </head>
 
 
 <body>
-<div class="page">
-	<div class="hiring_process_earth rotation"></div>
+
+<div id="page">
+<div class="hiring_process_earth rotation"></div>
+
+<div class="hiring_process_step1">
+	<div class="hr_man fadein_move"></div>
 </div>
+<div class="hiring_process_step2">
+	<div class="hr_man">111</div>
+</div>
+<div class="hiring_process_step3">
+	<div class="hr_man"></div>
+</div>
+<div class="hiring_process_step4">
+	<div class="hr_man"></div>
+</div>
+<div class="hiring_process_step5">
+	<div class="hr_man"></div>
+</div>
+<div class="hiring_process_step6">
+	<div class="hr_man"></div>
+</div>
+<div class="hiring_process_step7">
+	<div class="hr_man"></div>
+</div>
+</div>
+<script>
+	var startX,startY,endX,endY,curPage = 1;
+	document.getElementById("page").addEventListener("touchstart", touchStart, false);
+	document.getElementById("page").addEventListener("touchmove", touchMove, false);
+	document.getElementById("page").addEventListener("touchend", touchEnd, false);
+	function touchStart(event){
+ 		var touch = event.touches[0];
+ 		startX = touch.pageX;
+	}
+	
+	function touchMove(event){
+ 		var touch = event.touches[0];
+ 		endX = (startX-touch.pageX);
+  		
+	}
+	
+	function touchEnd(event){
+			if(endX >0){
+				//alert(curPage);
+				if(curPage < 7){
+					nextPage = curPage + 1;
+					$(".hiring_process_step"+curPage).css("visibility","hidden");
+					$(".hiring_process_step"+curPage).css("opacity","0");
+					$(".hiring_process_step"+curPage).css("-webkit-transform","rotate(-90deg)");
+					$(".hiring_process_step"+nextPage).css("visibility","visible");
+					$(".hiring_process_step"+nextPage).css("opacity","1");
+					$(".hiring_process_step"+nextPage).css("-webkit-transform","rotate(0deg)");
+					$(".hiring_process_step"+nextPage+" .hr_man").addClass("fadein_move");
+					curPage++;
+				}
+				
+			}else if(endX<0){
+				alert("22");
+			}
+			endX = 0;
+	}
+
+	//$("#page div").click(function(){
+	function next_page(){
+			var curPage = parseInt($(this).attr("class").substring(19,20));
+			var nextPage = curPage + 1;
+			
+			if(nextPage < 8){
+				$(this).css("visibility","hidden");
+				$(this).css("opacity","0");
+				$(this).css("-webkit-transform","rotate(-90deg)");
+				$(".hiring_process_step"+nextPage).css("visibility","visible");
+				$(".hiring_process_step"+nextPage).css("opacity","1");
+				$(".hiring_process_step"+nextPage).css("-webkit-transform","rotate(0deg)");
+				$(".hiring_process_step"+nextPage+" .hr_man").addClass("fadein_move");
+			}
+	}
+
+</script>
 
 </body>
 

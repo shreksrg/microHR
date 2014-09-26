@@ -1,11 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 define('APP_URL', SITE_URL);
+//define('APP_URL', SITE_URL . '/microhr/index.php');
 
 class FrontController extends CController
 {
-
-
     public function __construct()
     {
         parent::__construct();
