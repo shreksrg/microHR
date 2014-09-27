@@ -8,32 +8,29 @@ class Login extends FrontController
         return true;
     }
 
+    /**
+     * 登录验证
+     */
     public function index()
     {
+        $toPath = $this->input->get('reUrl');
         if ($this->_user->isGuest) {
             $modelApi = CModel::make('api_model');
-            $reUrl = APP_URL . '/login/auth';
-            $reqUrl = $modelApi->authUrl($reUrl);
-            CAjax::show(-1, 'fail', $reqUrl);
+            $reqUrl = $modelApi->authUrl($toPath);
+            header('location:' . $reqUrl);
         } else {
-            CAjax::show(0, 'successful');
+            header('location:' . $toPath);
         }
     }
 
-    public function auth()
+    public function check()
     {
-        $code = $this->input->get('code');
-        if ($code) {
-            $modelApi = CModel::make('api_model');
-            $access = $modelApi->authAccess($code);
-            $access = json_decode($access, true);
-            if (isset($access['openid'])) {
-                $this->_user->id = $access['openid'];
-                CView::show('auth', array('result' => 'ok'));
-            }
+        $action = $this->input->get('action');
+        if ($action == 'ajax') {
+            $return = $this->_user->isGuest !== true;
+            CAjax::result($return);
+            exit;
         }
-        CView::show('auth', array('result' => 'fail'));
     }
-
 
 }

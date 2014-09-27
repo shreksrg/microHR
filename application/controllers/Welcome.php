@@ -11,8 +11,12 @@ class Welcome extends FrontController
 
     public function index()
     {
-        $this->input->get();
         $this->load->model('login_model');
+        CView::show('index');
+    }
+
+    public function navigation()
+    {
         CView::show('index');
     }
 }

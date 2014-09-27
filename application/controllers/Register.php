@@ -15,35 +15,18 @@ class Register extends FrontController
 
     public function __construct()
     {
-
         parent::__construct();
         $this->_modelRegister = CModel::make('register_model');
-        //$this->_user->logout();
-    }
-
-    /**
-     * 授权验证
-     */
-    public function _authentication()
-    {
-        $filter = array('index');
-        if (in_array(APP_METHOD, $filter)) return false;
-        if ($this->_user->isGuest) {
-            CAjax::fail();
-            exit;
-        }
     }
 
     public function index()
     {
-        echo urlencode('http://211.152.55.100/microhr/index.php/login/auth');
         $action = $this->input->get('action');
         if ($action == 'append') {
             $this->append();
         } else {
             $_token = UUID::fast_uuid(6);
             CSession::set('_register_token', $_token);
-            echo (int)$this->_user->id;
             CView::show('register/form', array('token' => $_token));
         }
     }

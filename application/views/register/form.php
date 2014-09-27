@@ -202,11 +202,12 @@
     frmReg.submit(function () {
         var chk = checkSubmitAll();
         if (chk) {
-            $.get('<?=APP_URL?>/login', null, function (r) {
+            $.get('<?=APP_URL?>/login/check?action=ajax', null, function (r) {
                 if (r.code == 0) {
                     submit();
                 } else {
-                    $('#frmAuth').attr('src', r.data);
+                    alert('登录超时');
+                    location.href = '<?=APP_URL?>/welcome/navigation';
                 }
             }, 'json')
         }

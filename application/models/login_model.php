@@ -5,22 +5,35 @@ class Login_model extends App_model
     private $_uid;
     protected $_user;
 
-    function __construct()
+
+    /**
+     * 申请授权码
+     */
+    public function applyCode($toPath)
     {
-        parent::__construct();
+        $modelApi = CModel::make('api_model');
+        $reqUrl = $modelApi->authUrl($toPath);
+        header('location:' . $reqUrl);
     }
 
     /**
-     * 申请微信授权登录
-     * @param USER $user 用户对象
-     * @return boolean
+     * 微信网页授权
      */
-    public function authLogin($user, $reUrl = null)
+    public function webAuth($code)
     {
-        //申请授权码
+        $errCode = -1;
         $modelApi = CModel::make('api_model');
-        $action = $modelApi->authUrl($reUrl);
-        CView::show('code', array('action' => $action));
+        $access = $modelApi->authAccess($code);
+        $access = json_decode($access, true);
+        if (isset($access['openid'])) {
+            $errCode = 0;
+            $this->_user->id = $access['openid'];
+        } elseif (isset($access['errcode'])) {
+            $errCode = $access['errcode'];
+        }
+        return $errCode;
     }
+
+
 
 }
