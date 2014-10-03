@@ -1,0 +1,24 @@
+mhr_executive
+(高管表)
+
+ID
+name ： 姓名
+avatar：头像
+title ：职位
+digest ：摘要
+content ：内容
+favorites ：点赞数
+status: 状态： 0=关闭,1=开启
+create_time
+update_time
+isdel
+
+
+mhr_executive_log
+(高管日志表)
+ID: 自增id
+wxid: 用户微信id
+man_id :管理者Id
+type:  记录类型，0=否定 ,1=点赞
+create_time
+isdel
