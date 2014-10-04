@@ -9,6 +9,7 @@ digest ：摘要
 content ：内容
 favorites ：点赞数
 status: 状态： 0=关闭,1=开启
+sort: 排序
 create_time
 update_time
 isdel
