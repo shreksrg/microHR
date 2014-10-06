@@ -68,7 +68,6 @@ $(function(){
 
 	 
 	 //
-	 
 	
 
 	
@@ -90,43 +89,7 @@ function alertView(wrongmessage){
 
 
 //验证手机
-function checkSubmitAll(){ 
-	if($(".nickname").val()==""){ 
-		alert("昵称不能为空！")
-		myScroll.scrollToPage(0,0);
-		//setTimeout(function(){$(".nickname").focus();},1000 );
-		return false; 
-	} 
-	
-	if($(".university").val()==""){ 
-		alert("学校不能为空！")
-		myScroll.scrollToPage(2,0);
-		//setTimeout(function(){$(".university").focus();},1000 );
-		return false; 
-	} 
-	
-	if($(".special").val()==""){ 
-		alert("专业不能为空！")
-		myScroll.scrollToPage(3,0);
-		//setTimeout(function(){$(".special").focus();},1000 );
-		return false; 
-	} 
-	
-	if($(".phone").val()==""){ 
-		alert("手机号码不能为空！")
-		//setTimeout(function(){$(".phone").focus();},1000 );
-		return false; 
-	} 
 
-	if(!$(".phone").val().match(/^1[3|4|5|8][0-9]\d{4,8}$/)){ 
-		alert("手机号码格式不正确！请重新输入！")
-		//setTimeout(function(){$(".phone").focus();},1000 );
-		return false; 
-   } 
-	
-	location.href = "uploadstory.html";
-
-}
 
 //验证邮箱 
 //function checkSubmitEmail(){ 

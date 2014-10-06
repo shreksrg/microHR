@@ -1,124 +1,107 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta http-equiv="pragma" content="no-cache">
-    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<?php
+CView::show('layout/header', array('title' => '海亮校园招聘'));
+?>
+<script type="text/javascript" src="/public/wx/js/iscroll.js"></script>
+<script type="text/javascript">
+    var myScroll;
 
-    <link rel="shortcut icon" href="img/favicon.ico">
-    <meta http-equiv="expires" content="-1">
-    <title>海亮校园招聘</title>
-    <link rel="stylesheet" type="text/css" href="/public/wx/css/main.css">
-    <script src="/public/wx/js/jquery.min.js"></script>
-    <script src="/public/wx/js/common.js?v=<?= time() ?>"></script>
-    <script src="/public/wx/js/main.js?v=<?= time() ?>"></script>
-    <script type="text/javascript" src="/public/wx/js/iscroll.js"></script>
-    <script type="text/javascript">
-        var myScroll;
+    function loaded() {
+        myScroll = new iScroll('wrapper', {
+            snap: true,
+            momentum: false,
+            hScrollbar: false,
+            onScrollEnd: function () {
+                document.querySelector('#indicator > li.active').className = '';
+                document.querySelector('#indicator > li:nth-child(' + (this.currPageX + 1) + ')').className = 'active';
+            }
+        });
+    }
 
-        function loaded() {
-            myScroll = new iScroll('wrapper', {
-                snap: true,
-                momentum: false,
-                hScrollbar: false,
-                onScrollEnd: function () {
-                    document.querySelector('#indicator > li.active').className = '';
-                    document.querySelector('#indicator > li:nth-child(' + (this.currPageX + 1) + ')').className = 'active';
-                }
-            });
-        }
+    document.addEventListener('DOMContentLoaded', loaded, false);
+</script>
+<style type="text/css" media="all">
+    #wrapper {
+        width: 300px;
+        min-height: 300px;
+        overflow: hidden;
+        margin: 10% auto 0;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+    }
 
-        document.addEventListener('DOMContentLoaded', loaded, false);
-    </script>
-    <style type="text/css" media="all">
-        #wrapper {
-            width: 300px;
-            min-height: 300px;
-            overflow: hidden;
-            margin: 10% auto 0;
-            position: relative;
-            z-index: 1;
-            overflow: hidden;
-        }
+    #scroller {
+        width: 1500px;
+        height: 100%;
+        float: left;
+        padding: 0;
+    }
 
-        #scroller {
-            width: 1500px;
-            height: 100%;
-            float: left;
-            padding: 0;
-        }
+    #scroller ul {
+        list-style: none;
+        display: block;
+        float: left;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+    }
 
-        #scroller ul {
-            list-style: none;
-            display: block;
-            float: left;
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            margin: 0;
-            text-align: left;
-        }
+    #scroller li {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -o-box-sizing: border-box;
+        box-sizing: border-box;
+        display: block;
+        float: left;
+        width: 300px;
+        height: 300px;
+        text-align: center;
+        position: relative;
+    }
 
-        #scroller li {
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            -o-box-sizing: border-box;
-            box-sizing: border-box;
-            display: block;
-            float: left;
-            width: 300px;
-            height: 300px;
-            text-align: center;
-            position: relative;
-        }
+    #nav {
+        width: 225px;
+        height: 30px;
+        margin: 20px auto 0;
+        background: url(/public/img/register_steplinebg.png) repeat-x;
+        background-size: 1px 25px
+    }
 
-        #nav {
-            width: 225px;
-            height: 30px;
-            margin: 20px auto 0;
-            background: url(/public/img/register_steplinebg.png) repeat-x;
-            background-size: 1px 25px
-        }
+    #indicator, #indicator > li {
+        display: block;
+        float: left;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
 
-        #indicator, #indicator > li {
-            display: block;
-            float: left;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+    #indicator {
+        width: 225px;
+    }
 
-        #indicator {
-            width: 225px;
-        }
+    #indicator > li {
+        width: 25px;
+        height: 25px;
+        -webkit-border-radius: 30px;
+        background: #92cedd;
+        overflow: hidden;
+        margin-left: 25px;
+        text-align: center;
+        line-height: 25px;
+    }
 
-        #indicator > li {
-            width: 25px;
-            height: 25px;
-            -webkit-border-radius: 30px;
-            background: #92cedd;
-            overflow: hidden;
-            margin-left: 25px;
-            text-align: center;
-            line-height: 25px;
-        }
+    #indicator > li:first-child {
+        margin-left: 0;
+    }
 
-        #indicator > li:first-child {
-            margin-left: 0;
-        }
+    #indicator > li.active {
+        background: #fff83b;
+        color: #4cbad5
+    }
 
-        #indicator > li.active {
-            background: #fff83b;
-            color: #4cbad5
-        }
-
-    </style>
-</head>
+</style>
 <body>
 
 <div id="wrapper">
@@ -162,17 +145,12 @@
                     <button type="submit" class="register_submit">注册</button>
                 </li>
             </form>
-            <input name="reUrl" type="hidden" value="<?= APP_URL ?>"/>
+            <input name="reUrl" type="hidden" value="<?= APP_URL ?>/stories/append"/>
         </ul>
     </div>
 
 </div>
-<div>
-    <iframe id="frmAuth"
-            src="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f7f91904d10aa54&redirect_uri=http%3A%2F%2Fapi.microhr.com%2Flogin%2Fauth&response_type=code&scope=snsapi_base&state=ok#wechat_redirect"
-            frameborder="0" width="400" height="200" scrolling="no"
-            style="display: block; background: darkgray;"></iframe>
-</div>
+
 
 <div id="nav">
     <ul id="indicator">
@@ -198,9 +176,41 @@
 </script>
 
 <script>
+
+    function checkSubmit() {
+        if ($(".nickname").val() == "") {
+            alert("昵称不能为空！")
+            myScroll.scrollToPage(0, 0);
+            return false;
+        }
+
+        if ($(".university").val() == "") {
+            alert("学校不能为空！")
+            myScroll.scrollToPage(2, 0);
+            return false;
+        }
+
+        if ($(".special").val() == "") {
+            alert("专业不能为空！")
+            myScroll.scrollToPage(3, 0);
+            return false;
+        }
+
+        if ($(".phone").val() == "") {
+            alert("手机号码不能为空！")
+            return false;
+        }
+
+        if (!$(".phone").val().match(/^1[3|4|5|8][0-9]\d{4,8}$/)) {
+            alert("手机号码格式不正确！请重新输入！")
+            return false;
+        }
+        return true;
+    }
+
     var frmReg = $('#frmRegister')
     frmReg.submit(function () {
-        var chk = checkSubmitAll();
+        var chk = checkSubmit();
         if (chk) {
             $.get('<?=APP_URL?>/login/check?action=ajax', null, function (r) {
                 if (r.code == 0) {
@@ -227,7 +237,7 @@
             success: function (rep) {
                 if (rep.code == 0) {
                     alert('注册成功');
-                    //location.href = $('[name=reUrl]').val();
+                    location.href = $('[name=reUrl]').val();
                 } else {
                     alert(rep.message);
                 }

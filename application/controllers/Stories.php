@@ -8,20 +8,11 @@ class Stories extends FrontController
     public function __construct()
     {
         parent::__construct();
-        $this->_modelStory = CModel::get('story_model');
+        $this->_modelStory = CModel::make('story_model');
+
     }
 
-    public function _authentication()
-    {
-        if ($this->_user->isGuest) {
-            $action = $this->input->get('action');
-            if (REQUEST_METHOD == 'POST' && $action == 'append') {
-                $post = $this->input->post();
-                CSession::set('_story_post', $post);
-            }
-            parent::_authentication();
-        }
-    }
+
 
     /**
      *故事列表
@@ -45,20 +36,16 @@ class Stories extends FrontController
     public function append()
     {
         $action = $this->input->get('action');
-        if ($action == 'append') {
+        if ($action == 'save') {
             $post = $this->input->post();
-            if (!$post) $post = CSession::get('_story_post');
             $this->checkSubmit($post);
             $modelApi = CModel::make('api_model');
             $post['wxid'] = $this->_user->id;
             $return = $this->_modelStory->append($post);
             if ($return === true) {
                 CSession::drop('_story_token');
-                CView::show('story/result');
-            } else {
-                $err = array('code' => 1002, 'content' => '提交失败');
-                CView::show('message/error', $err);
             }
+            CAjax::result($return);
         } else {
             $_token = UUID::fast_uuid(6);
             CSession::set('_story_token', $_token);
@@ -81,7 +68,7 @@ class Stories extends FrontController
             }
         }
         if ($err) {
-            CView::show('message/error', $err);
+            CAjax::show($err['code'], $err['content']);
             exit(0);
         }
     }
@@ -100,13 +87,12 @@ class Stories extends FrontController
     /**
      * 验证表单
      */
-    protected function  validateForm()
+    protected function validateForm()
     {
         $validator = FormValidation::make();
         $validator->set_rules('content', 'Content', 'required|xss_clean');
         $validator->set_rules('token', 'Token', 'required|xss_clean');
         return $validator->run() === true;
     }
-
 
 }

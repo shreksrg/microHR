@@ -8,6 +8,7 @@ class Register extends FrontController
     protected $_modelRegister;
     protected $_modelApi;
 
+
     /**
      * @var 登记项
      */
@@ -18,6 +19,7 @@ class Register extends FrontController
         parent::__construct();
         $this->_modelRegister = CModel::make('register_model');
     }
+
 
     public function index()
     {

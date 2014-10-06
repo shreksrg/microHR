@@ -28,17 +28,18 @@ class Story_model extends App_model
     /**
      * 新增故事
      */
-    public function append($openId, $data)
+    public function append($data)
     {
         $return = false;
-        $modelReg = CModel::make('register_model');
-        $regRow = $modelReg->getRowByWId($openId);
-        if ($regRow) {
+        $wxid = $data['wxid'];
+        $query = $this->db->query("select id from mhr_register where isdel=0 and  wxid='$wxid' limit 1");
+        if ($query->row()) {
+            $regId = $query->row()->id;
             $content = $data['content'];
             $now = time();
             $value = array(
-                'register_id' => $regRow->id,
-                'wxid' => $openId,
+                'register_id' => $regId,
+                'wxid' => $wxid,
                 'digest' => mb_substr($content, 32),
                 'create_time' => $now,
                 'update_time' => $now,

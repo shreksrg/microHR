@@ -19,7 +19,7 @@ class Login_model extends App_model
     /**
      * 微信网页授权
      */
-    public function webAuth($code)
+    public function webAuth($user, $code)
     {
         $errCode = -1;
         $modelApi = CModel::make('api_model');
@@ -27,13 +27,12 @@ class Login_model extends App_model
         $access = json_decode($access, true);
         if (isset($access['openid'])) {
             $errCode = 0;
-            $this->_user->id = $access['openid'];
+            $user->id = $access['openid'];
         } elseif (isset($access['errcode'])) {
             $errCode = $access['errcode'];
         }
         return $errCode;
     }
-
 
 
 }
