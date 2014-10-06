@@ -12,7 +12,10 @@ class Stories extends FrontController
 
     }
 
-
+    public function _authentication()
+    {
+        return true;
+    }
 
     /**
      *故事列表
@@ -27,6 +30,47 @@ class Stories extends FrontController
             $total = (int)$this->input->post('total');
             $rows = $this->_modelStory->getRows($total, $offset);
             CAjax::show(0, 'successful', $rows);
+        }
+    }
+
+    /**
+     *故事详细
+     */
+    public function show()
+    {
+        $id = (int)$this->input->get('id');
+        if ($id > 0) {
+            $data['detail'] = $this->_modelStory->getRow($id);
+            CView::show('story/detail', $data);
+        }
+    }
+
+    /**
+     *
+     */
+    public function comment()
+    {
+        $route = $this->input->get('r');
+        if ($route == 'save') {
+            //增加评论
+            $postData = $this->input->post();
+            $storyId = (int)$this->input->post('id');
+            if ($this->validateForm($postData) !== true || $storyId <= 0) {
+                CAjax::show(1001, 'Invalid post data');
+                exit(0);
+            }
+            $postData['wxid'] = $this->_user->id;
+            $return = $this->_modelStory->appendComment($postData);
+            if ($return === true) {
+                $this->_modelStory->counter($storyId, 'comment'); //更新故事评论统计数
+                CSession::drop('_comment_token');
+            }
+            CAjax::result($return);
+        } else {
+            $storyId = (int)$this->input->get('id');
+            $_token = UUID::randString(18);
+            CSession::set('_comment_token', $_token);
+            CView::show('story/comment', array('token' => $_token, 'storyId' => $storyId));
         }
     }
 
@@ -79,7 +123,20 @@ class Stories extends FrontController
     public function appraise()
     {
         $id = (int)$this->input->get('id');
-        $type = (int)$this->input->get('type');
+        $type = (int)$this->input->get('t');
+
+        //检查是否已经点赞
+        if ($type == 1) {
+            $wxid = $this->_user->id;
+            //$wxid = 'asadfa434';
+            $row = $this->_modelStory->getLog($wxid, $id, $type);
+            if ($row) CAjax::show(1008, 'had been favorite');
+            else {
+                $return = $this->_modelStory->appendLog($wxid, $id, $type);
+                if (!$return) CAjax::result($return);
+            }
+        }
+
         $return = $this->_modelStory->appraise($id, $type);
         CAjax::result($return);
     }
@@ -94,5 +151,6 @@ class Stories extends FrontController
         $validator->set_rules('token', 'Token', 'required|xss_clean');
         return $validator->run() === true;
     }
+
 
 }
