@@ -20,8 +20,8 @@ return array(
             array(
                 'name' => '精彩互动',
                 'sub_button' => array(
-                    array('type' => 'view', 'name' => '求职故事', 'url' => 'http://211.152.55.100/microhr/index.php/stories/append'),
-                    array('type' => 'view', 'name' => '直面高管', 'url' => 'http://211.152.55.100/microhr/index.php/senior'),
+                    array('type' => 'view', 'name' => '求职故事', 'url' => 'http://211.152.55.100/microhr/index.php/stories'),
+                    array('type' => 'view', 'name' => '直面高管', 'url' => 'http://211.152.55.100/microhr/index.php/executive'),
                 )
             ),
             array(

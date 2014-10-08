@@ -3,7 +3,7 @@ CView::show('layout/header', array('title' => '海亮校园招聘'));
 ?>
 <style>
     body {
-        background: #f3f7fc url(<?= WEB_PATH ?>/public/img/storybg.png) no-repeat center 0;
+        background: #f3f7fc url(<?= WEB_PATH ?>/public/wx/img/storybg.png) no-repeat center 0;
         background-size: 100% 106px;
     }
 </style>

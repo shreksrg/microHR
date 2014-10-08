@@ -25,6 +25,7 @@ class Stories extends FrontController
         $offset = 10;
         if (REQUEST_METHOD == 'GET') {
             $data['rows'] = $this->_modelStory->getRows(0, $offset);
+           // echo 'ok';
             CView::show('story/index', $data);
         } else {
             $total = (int)$this->input->post('total');

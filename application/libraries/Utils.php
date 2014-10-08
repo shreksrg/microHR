@@ -19,32 +19,65 @@ class Utils
     public static function dateDiff($part, $begin, $end)
     {
         $diff = $end - $begin;
+        $reVal = '';
 
-        switch ($part) {
-            case "y":
-                $retval = bcdiv($diff, (60 * 60 * 24 * 365));
-                break;
-            case "m":
-                $retval = bcdiv($diff, (60 * 60 * 24 * 30));
-                break;
-            case "w":
-                $retval = bcdiv($diff, (60 * 60 * 24 * 7));
-                break;
-            case "d":
-                $retval = bcdiv($diff, (60 * 60 * 24));
-                break;
-            case "h":
-                $retval = bcdiv($diff, (60 * 60));
-                break;
-            case "n":
-                $retval = bcdiv($diff, 60);
-                break;
-            case "s":
-                $retval = $diff;
-                break;
+
+
+
+        if (!function_exists('bcdiv')) {
+            switch ($part) {
+                case "y":
+                    $reVal = floor($diff/(60 * 60 * 24 * 365));
+                    break;
+                case "m":
+                    $reVal = floor($diff/(60 * 60 * 24 * 30));
+                    break;
+                case "w":
+                    $reVal = floor($diff/(60 * 60 * 24 * 7));
+                    break;
+                case "d":
+                    $reVal = floor($diff/(60 * 60 * 24));
+                    break;
+                case "h":
+                    $reVal = floor($diff/(60 * 60));
+                    break;
+                case "n":
+                    $reVal = floor($diff/60);
+                    break;
+                case "s":
+                    $reVal = $diff;
+                    break;
+            }
+            return $reVal;
+        } else {
+
+            switch ($part) {
+                case "y":
+                    $reVal = bcdiv($diff, (60 * 60 * 24 * 365));
+                    break;
+                case "m":
+                    $reVal = bcdiv($diff, (60 * 60 * 24 * 30));
+                    break;
+                case "w":
+                    $reVal = bcdiv($diff, (60 * 60 * 24 * 7));
+                    break;
+                case "d":
+                    $reVal = bcdiv($diff, (60 * 60 * 24));
+                    break;
+                case "h":
+                    $reVal = bcdiv($diff, (60 * 60));
+                    break;
+                case "n":
+                    $reVal = bcdiv($diff, 60);
+                    break;
+                case "s":
+                    $reVal = $diff;
+                    break;
+            }
+            return $reVal;
         }
-        return $retval;
     }
+
 
     public static function diffDateLabel($start, $expire)
     {

@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="shortcut icon" href="img/favicon.ico">
+<meta http-equiv="expires" content="-1">
+<title>明康汇微信宣传页</title>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<script src="js/jquery.min.js"></script>
+<script>
+$(function(){
+	$(".page2 .arrowup").hide();
+	$(".page6 .arrowup").hide();
+	$(".page7 .arrowup").hide();
+	
+	var curPage=1;
+		$(".arrowup").click(function(){
+			if(curPage < 8){
+				if(curPage == 1){
+					$(".page2 ul").addClass("fadein")
+					$(".page2 ul li").addClass("plin")
+					
+					document.querySelector(".page2 ul li").addEventListener("webkitAnimationEnd", function(){
+						$(".page2 .arrowup").show();
+					})
+				}
+				
+				if(curPage == 6){
+					$(".index_wrapper .page7 .map").addClass("mapscale")
+					$(".index_wrapper .page7 .map .city").addClass("cityfade")
+					
+					document.querySelector(".index_wrapper .page7 .map .city").addEventListener("webkitAnimationEnd", function(){
+						$(".page7 .arrowup").show();
+					})
+				}
+
+				
+				$(".page"+curPage).css("top","-100%")
+				$(".page"+parseInt(curPage+1)).css("top","0")
+				curPage++;
+				
+
+			}
+		});
+
+		$(".page6").click(function(){
+				$(this).addClass("bgblur");
+				$(".page6 .step1").addClass("movein")
+		});
+		$(".page6 .step1").click(function(){
+				$(".page6 .step2").addClass("movein")
+		});
+		$(".page6 .step2").click(function(){
+				$(".page6 .step3").addClass("movein")
+		});
+		$(".page6 .step3").click(function(){
+				$(".page6 .step4").addClass("movein")
+		});
+		$(".page6 .step4").click(function(){
+				$(".page6 .step5").addClass("movein")
+				$(".page6 .arrowup").show();
+		});
+
+
+});	
+
+
+</script>
+</head>
+
+
+<body>
+<audio style="position:absolute;left:-1000px" id="sd_win" src="win.mp3"></audio><!--5的声音-->
+
+<div id="page" class="index_wrapper">
+<div class="page1">
+	<div class="logo fadein"></div>
+	<div class="title fadeinmove"></div>
+    <a class="arrowup" href="#"></a>
+</div>
+<div class="page2">
+	<ul>
+	<li class="y1"></li>
+	<li class="y2"></li>
+	<li  class="y3"></li>
+	<li  class="y4"></li>
+	<li  class="y5"></li>
+	<li  class="y6"></li>
+	<li  class="y7"></li>
+	<li  class="y8"></li>
+	<li  class="y9"></li>
+    </ul>
+    <a class="arrowup" href="#"></a>
+</div>
+<div class="page3">
+    <a class="arrowup" href="#"></a>
+</div>
+<div class="page4">
+    <a class="arrowup" href="#"></a>
+</div>
+<div class="page5">
+    <a class="arrowup" href="#"></a>
+</div>
+<div class="page6">
+	<div class="step1"></div>
+	<div class="step2"></div>
+	<div class="step3"></div>
+	<div class="step4"></div>
+	<div class="step5"></div>
+    <a class="arrowup" href="#"></a>
+</div>
+<div class="page7">
+	<div class="map"></div>
+	<div class="map"><div class="city"></div></div>
+    <a class="arrowup" href="#"></a>
+</div>
+<div class="page8">
+	
+</div>
+</div>
+<div class="sound"></div>
+<script>
+$(".sound").click(function(){ 
+	document.getElementById("sd_win").play(); 
+});
+</script>
+</body>
+
+</html>

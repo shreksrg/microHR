@@ -10,10 +10,10 @@ class Executive extends FrontController
         $this->_modelMan = CModel::make('executive_model');
     }
 
-    public function _authentication()
+    /*public function _authentication()
     {
         return true;
-    }
+    }*/
 
     /**
      * 高管列表
@@ -23,6 +23,7 @@ class Executive extends FrontController
         $offset = 10;
         if (REQUEST_METHOD == 'GET') {
             $data['rows'] = $this->_modelMan->getRows(0, $offset);
+
             CView::show('executive/index', $data);
         } else {
             $total = (int)$this->input->post('total');
@@ -53,7 +54,6 @@ class Executive extends FrontController
         $id = (int)$this->input->get('id');
         if ($id > 0) {
             $wxid = $this->_user->id;
-            $wxid = 'asadfa434';
             $row = $this->_modelMan->getRow($id);
             if (!$row) CAjax::show(1001, 'no record');
             $log = $this->_modelMan->getLog($wxid, $id);
